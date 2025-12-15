@@ -1,0 +1,138 @@
+name: Welcome & Label First-Time Discussion Author (GraphQL)
+
+on:
+  discussion:
+    types: [created]
+
+jobs:
+  label_welcome_discussion:
+    runs-on: ubuntu-latest
+    if: github.event.discussion.category.name == 'Welcome'
+    steps:
+      - name: Check if discussion author is a true first-timer in this repo
+        id: first_time
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Check if the current discussion author has any prior discussions in this repo
+            const username = context.payload.discussion.user.login;
+            const { repo, owner } = context.repo;
+            console.log(`Checking for existing discussions by user: ${username} in ${owner}/${repo}`);
+
+            let result;
+            try {
+              result = await github.graphql(`
+                query {
+                  search(
+                    query: "repo:${owner}/${repo} author:${username}",
+                    type: DISCUSSION,
+                    first: 2
+                  ) {
+                    discussionCount
+                    edges {
+                      node {
+                        ... on Discussion {
+                          number
+                        }
+                      }
+                    }
+                  }
+                }
+              `);
+            } catch (err) {
+              // Handle the rare case that the search query fails, e.g. permissions or API error
+              console.log(`Error running query for ${username}:`, err.message);
+              core.setOutput('is_first_time', 'false');
+              core.setOutput('discussion_number', context.payload.discussion.number);
+              core.setOutput('username', username);
+              return;
+            }
+
+            const discussionCount = result.search.discussionCount;
+            const newDiscussionNumber = context.payload.discussion.number;
+            const edges = result.search.edges || [];
+
+            // If there is only one discussion and it's the current discussion, then the user is a true first-timer
+            const onlyDiscussionIsCurrent = (discussionCount === 1) && (
+              edges[0]?.node?.number === newDiscussionNumber
+            );
+
+            const isFirstTime = (discussionCount === 1 && onlyDiscussionIsCurrent) || (discussionCount === 0);
+
+            if (isFirstTime) {
+              console.log(`User ${username} is a true first-timer (no prior discussions in this repo).`);
+              core.setOutput('is_first_time', 'true');
+            } else {
+              console.log(`User ${username} has posted discussions before in this repo.`);
+              core.setOutput('is_first_time', 'false');
+            }
+            core.setOutput('discussion_number', newDiscussionNumber);
+            core.setOutput('username', username);
+
+      - name: Get GraphQL IDs for Discussion and Label
+        id: ids
+        if: steps.first_time.outputs.is_first_time == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const discussion_number = Number(process.env.DISCUSSION_NUMBER);
+            const label_name = "Welcome 🎉";
+            const { repo, owner } = context.repo;
+
+            const discussionQuery = `
+              query {
+                repository(owner: "${owner}", name: "${repo}") {
+                  discussion(number: ${discussion_number}) {
+                    id
+                  }
+                  labels(first: 100) {
+                    nodes {
+                      name
+                      id
+                    }
+                  }
+                }
+              }
+            `;
+            const data = await github.graphql(discussionQuery);
+            const discussionId = data.repository.discussion?.id;
+            if (!discussionId) {
+              throw new Error(`Could not find discussion with number ${discussion_number} in ${owner}/${repo}`);
+            }
+            const labelNode = data.repository.labels.nodes.find(l => l.name === label_name);
+            if (!labelNode) {
+              throw new Error(`Label "${label_name}" not found in ${owner}/${repo}`);
+            }
+            core.setOutput('discussion_id', discussionId);
+            core.setOutput('label_id', labelNode.id);
+            console.log(`Discussion ID: ${discussionId}`);
+            console.log(`Label ID for "${label_name}": ${labelNode.id}`);
+        env:
+          DISCUSSION_NUMBER: ${{ steps.first_time.outputs.discussion_number }}
+
+      - name: Apply label using GraphQL
+        if: >
+          steps.first_time.outputs.is_first_time == 'true' &&
+          steps.ids.outputs.label_id != '' &&
+          steps.ids.outputs.discussion_id != ''
+        run: |
+          echo "Applying label via GraphQL mutation..."
+          gh api graphql -f query='
+            mutation($labelableId:ID!,$labelIds:[ID!]!) {
+              addLabelsToLabelable(input:{labelableId:$labelableId,labelIds:$labelIds}) {
+                labelable {
+                  ... on Discussion {
+                    number
+                    title
+                    labels(first:10) { nodes { name } }
+                  }
+                }
+              }
+            }
+          ' \
+            -F labelableId=${{ steps.ids.outputs.discussion_id }} \
+            -F labelIds[]=${{ steps.ids.outputs.label_id }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
