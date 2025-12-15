@@ -75,7 +75,7 @@ jobs:
         if: steps.first_time.outputs.is_first_time == 'true'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.MY_PAT }}
           script: |
             const discussion_number = Number(process.env.DISCUSSION_NUMBER);
             const label_name = "Welcome 🎉";
