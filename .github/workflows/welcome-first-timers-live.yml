@@ -7,7 +7,6 @@ on:
 jobs:
   label_welcome_discussion:
     runs-on: ubuntu-latest
-    if: github.event.discussion.category.name == 'Welcome'
     steps:
       - name: Check if discussion author is a true first-timer in this repo
         id: first_time
@@ -70,7 +69,7 @@ jobs:
             core.setOutput('discussion_number', newDiscussionNumber);
             core.setOutput('username', username);
 
-      - name: Get GraphQL IDs for Discussion and Label
+      - name: Get GraphQL IDs for Discussion and Label (with Pagination)
         id: ids
         if: steps.first_time.outputs.is_first_time == 'true'
         uses: actions/github-script@v7
@@ -81,34 +80,51 @@ jobs:
             const label_name = "Welcome 🎉";
             const { repo, owner } = context.repo;
 
-            const discussionQuery = `
+            // Get the discussion node ID
+            const discussionResp = await github.graphql(`
               query {
                 repository(owner: "${owner}", name: "${repo}") {
                   discussion(number: ${discussion_number}) {
                     id
                   }
-                  labels(first: 100) {
-                    nodes {
-                      name
-                      id
-                    }
-                  }
                 }
               }
-            `;
-            const data = await github.graphql(discussionQuery);
-            const discussionId = data.repository.discussion?.id;
+            `);
+            const discussionId = discussionResp.repository.discussion?.id;
             if (!discussionId) {
               throw new Error(`Could not find discussion with number ${discussion_number} in ${owner}/${repo}`);
             }
-            const labelNode = data.repository.labels.nodes.find(l => l.name === label_name);
-            if (!labelNode) {
-              throw new Error(`Label "${label_name}" not found in ${owner}/${repo}`);
+
+            // Paginate labels to find the correct label node
+            let cursor = null;
+            let foundLabel = null;
+            do {
+              const labelsResp = await github.graphql(`
+                query($after: String) {
+                  repository(owner: "${owner}", name: "${repo}") {
+                    labels(first: 100, after: $after) {
+                      pageInfo { hasNextPage endCursor }
+                      nodes { name id }
+                    }
+                  }
+                }
+              `, { after: cursor });
+
+              const labels = labelsResp.repository.labels.nodes;
+              foundLabel = labels.find(l => l.name === label_name);
+              cursor = labelsResp.repository.labels.pageInfo.hasNextPage
+                ? labelsResp.repository.labels.pageInfo.endCursor
+                : null;
+            } while (!foundLabel && cursor);
+
+            if (!foundLabel) {
+              throw new Error(`Label "${label_name}" not found in ${owner}/${repo} (checked all pages)`);
             }
+
             core.setOutput('discussion_id', discussionId);
-            core.setOutput('label_id', labelNode.id);
+            core.setOutput('label_id', foundLabel.id);
             console.log(`Discussion ID: ${discussionId}`);
-            console.log(`Label ID for "${label_name}": ${labelNode.id}`);
+            console.log(`Label ID for "${label_name}": ${foundLabel.id}`);
         env:
           DISCUSSION_NUMBER: ${{ steps.first_time.outputs.discussion_number }}
 
