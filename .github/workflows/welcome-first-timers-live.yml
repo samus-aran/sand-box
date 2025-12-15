@@ -14,17 +14,18 @@ jobs:
         with:
           github-token: ${{ secrets.MY_PAT }}
           script: |
-            // Check if the current discussion author has any prior discussions in this repo
             const username = context.payload.discussion.user.login;
             const { repo, owner } = context.repo;
+            const discussionNumber = context.payload.discussion.number;
             console.log(`Checking for existing discussions by user: ${username} in ${owner}/${repo}`);
 
             let result;
             try {
-              result = await github.graphql(`
-                query {
+              result = await github.graphql(
+                `
+                query($owner: String!, $repo: String!, $username: String!) {
                   search(
-                    query: "repo:${owner}/${repo} author:${username}",
+                    query: "repo:$owner/$repo author:$username",
                     type: DISCUSSION,
                     first: 2
                   ) {
@@ -38,19 +39,20 @@ jobs:
                     }
                   }
                 }
-              `);
+                `,
+                { owner, repo, username }
+              );
             } catch (err) {
-              // Handle the rare case that the search query fails, e.g. permissions or API error
               console.log(`Error running query for ${username}:`, err.message);
               core.setOutput('is_first_time', 'false');
-              core.setOutput('discussion_number', context.payload.discussion.number);
+              core.setOutput('discussion_number', discussionNumber);
               core.setOutput('username', username);
               return;
             }
 
             const discussionCount = result.search.discussionCount;
-            const newDiscussionNumber = context.payload.discussion.number;
             const edges = result.search.edges || [];
+            const newDiscussionNumber = discussionNumber;
 
             // If there is only one discussion and it's the current discussion, then the user is a true first-timer
             const onlyDiscussionIsCurrent = (discussionCount === 1) && (
@@ -69,7 +71,7 @@ jobs:
             core.setOutput('discussion_number', newDiscussionNumber);
             core.setOutput('username', username);
 
-      - name: Get GraphQL IDs for Discussion and Label (with Pagination)
+      - name: Get GraphQL IDs for Discussion and Label (with Pagination, Secure Variables)
         id: ids
         if: steps.first_time.outputs.is_first_time == 'true'
         uses: actions/github-script@v7
@@ -80,35 +82,41 @@ jobs:
             const label_name = "Welcome 🎉";
             const { repo, owner } = context.repo;
 
-            // Get the discussion node ID
-            const discussionResp = await github.graphql(`
-              query {
-                repository(owner: "${owner}", name: "${repo}") {
-                  discussion(number: ${discussion_number}) {
+            // Get the discussion node ID using variables
+            const discussionResp = await github.graphql(
+              `
+              query($owner: String!, $repo: String!, $discussion_number: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  discussion(number: $discussion_number) {
                     id
                   }
                 }
               }
-            `);
+              `,
+              { owner, repo, discussion_number }
+            );
             const discussionId = discussionResp.repository.discussion?.id;
             if (!discussionId) {
               throw new Error(`Could not find discussion with number ${discussion_number} in ${owner}/${repo}`);
             }
 
-            // Paginate labels to find the correct label node
+            // Paginate labels to find the correct label node, using variables
             let cursor = null;
             let foundLabel = null;
             do {
-              const labelsResp = await github.graphql(`
-                query($after: String) {
-                  repository(owner: "${owner}", name: "${repo}") {
+              const labelsResp = await github.graphql(
+                `
+                query($owner: String!, $repo: String!, $after: String) {
+                  repository(owner: $owner, name: $repo) {
                     labels(first: 100, after: $after) {
                       pageInfo { hasNextPage endCursor }
                       nodes { name id }
                     }
                   }
                 }
-              `, { after: cursor });
+                `,
+                { owner, repo, after: cursor }
+              );
 
               const labels = labelsResp.repository.labels.nodes;
               foundLabel = labels.find(l => l.name === label_name);
