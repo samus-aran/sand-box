@@ -3,14 +3,14 @@ labels: []
 body:
   - type: markdown
     attributes:
-      value: <img src='https://github.com/user-attachments/assets/4f34df69-2b34-4472-957a-0f9a1733bd31' width='40' alt='Welcome gif' /> 
-        
-        Welcome! This space is **just** for introductions! So say hi and share what you’re excited about here on GitHub.
+      value: |
+      Welcome! This space is **just** for introductions! So say hi and share what you’re excited about here on GitHub.
         - **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
         - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
         - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
-
+        
         Keep it friendly and human: a couple links are fine, but let *you* be the main event (no link-dumping, recruiting, or promo-only posts).
+        <img src='https://github.com/user-attachments/assets/4f34df69-2b34-4472-957a-0f9a1733bd31' width='30' alt='Welcome gif' /> 
   - type: textarea
     id: introduce_yourself
     attributes:
