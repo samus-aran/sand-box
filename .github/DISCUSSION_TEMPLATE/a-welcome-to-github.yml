@@ -4,22 +4,32 @@ body:
   - type: markdown
     attributes:
       value: |
-        Welcome! This space is just for introductions—say hi, share what you’re excited about, and meet other folks.
+        <img width="1320" height="568" alt="db10da00-1b69-4d39-b72e-79976a83d9c5-1320x568" src="https://github.com/user-attachments/assets/97d3a531-563f-4ca8-b0ec-b45a5a71cc36" />
 
-        **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
+        # Welcome
+        This space is for introductions. Say hi, share what you are excited about, and meet other folks.
 
-        **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
+        ## Where should this go
+        If your post is really about how to use GitHub or troubleshooting, please post in New to GitHub or the most relevant help category so you can get the best answers.
 
-        **One intro per person:** make one intro post and feel free to add updates as replies anytime.
+        ## Privacy and safety
+        Please do not share sensitive personal info such as addresses, phone numbers, or private emails.
 
-        Keep it friendly and human: a couple links are fine, but let *you* be the main event (no link-dumping, recruiting, or promo-only posts).
+        ## One intro per person
+        Please make one intro discussion and share updates later as replies anytime.
+
+        ## Keep it friendly and human
+        A couple links are fine, just keep them secondary to your intro. Avoid link dumping, recruiting, or promo only posts.
+
+        Conversation starter
+        End with Ask me about or Say hi if you also like
 
   - type: input
     id: name
     attributes:
       label: "What should we call you? (optional)"
-      description: "First name, handle, or whatever you prefer—no real name required."
-      placeholder: "e.g., Samus / @samus-aran / “Sam”"
+      description: "First name, handle, or whatever you prefer. No real name required."
+      placeholder: "e.g., Samus, @samus-aran, Sam"
     validations:
       required: false
 
@@ -27,13 +37,13 @@ body:
     id: journey
     attributes:
       label: "Where are you in your GitHub journey?"
-      description: "Pick the closest match—there’s no wrong answer."
+      description: "Pick the closest match. There is no wrong answer."
       options:
         - "Brand new to GitHub"
-        - "Student / learning the basics"
+        - "Student or learning the basics"
         - "Building my first project"
         - "Contributing to open source"
-        - "Maintaining a project / repo owner"
+        - "Maintaining a project or repo owner"
         - "Here to make connections"
         - "Other"
     validations:
@@ -48,12 +58,12 @@ body:
         - label: "Open source"
         - label: "Accessibility"
         - label: "Git basics"
-        - label: "GitHub features & news"
-        - label: "Actions / CI"
+        - label: "GitHub features and news"
+        - label: "Actions or CI"
         - label: "Docs"
         - label: "Security"
         - label: "Dev tools"
-        - label: "API / integrations"
+        - label: "API or integrations"
         - label: "Project management"
         - label: "Community building"
         - label: "Other"
@@ -63,8 +73,8 @@ body:
   - type: input
     id: interest_tags
     attributes:
-      label: "In 2–3 words, what are you interested in on GitHub? (optional)"
-      description: "Think of these like mini-tags (e.g., “design systems”, “Python”, “issue triage”, “docs”)."
+      label: "In 2 to 3 words, what are you interested in on GitHub? (optional)"
+      description: "Think of these like mini tags. Examples include design systems, Python, issue triage, docs."
       placeholder: "e.g., accessibility testing; GitHub Actions; documentation"
     validations:
       required: false
@@ -73,8 +83,8 @@ body:
     id: learn_build
     attributes:
       label: "What are you hoping to learn or build next?"
-      description: "A sentence or two is perfect—share what you’re excited about."
-      placeholder: "I’m hoping to… / I’m building… / Next I want to try…"
+      description: "A sentence or two is perfect."
+      placeholder: "I am hoping to… I am building… Next I want to try…"
     validations:
       required: true
 
@@ -82,13 +92,13 @@ body:
     id: fun_extra
     attributes:
       label: "A fun extra (optional)"
-      description: "Choose one prompt—or skip it!"
+      description: "Choose one prompt or skip it."
       options:
         - "Favorite tool right now"
         - "Currently learning"
         - "Fun fact"
-        - "Your ‘ask me about…’ topic"
-        - "Something you’re proud of"
+        - "Your ask me about topic"
+        - "Something you are proud of"
         - "Other"
     validations:
       required: false
@@ -97,8 +107,8 @@ body:
     id: fun_answer
     attributes:
       label: "Your fun extra (optional)"
-      description: "Keep it light—anything that invites conversation."
-      placeholder: "Ask me about… / Fun fact: … / Currently learning: …"
+      description: "Keep it light and inviting."
+      placeholder: "Ask me about… Fun fact… Currently learning…"
     validations:
       required: false
 
@@ -106,7 +116,7 @@ body:
     id: links
     attributes:
       label: "Optional links (optional)"
-      description: "If you want, share your GitHub profile and/or **one** relevant repo. Keep it secondary to your intro (no promo blasts)."
+      description: "If you want, share your GitHub profile and or one relevant repo. Keep it secondary to your intro."
       placeholder: |
         https://github.com/your-handle
         https://github.com/your-handle/your-repo
