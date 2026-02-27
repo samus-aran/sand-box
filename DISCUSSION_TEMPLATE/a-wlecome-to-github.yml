@@ -1,0 +1,114 @@
+title: "👋 Hello from {Name/Handle}"
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Welcome! This space is just for introductions—say hi, share what you’re excited about, and meet other folks.
+
+        **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
+
+        **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
+
+        **One intro per person:** make one intro post and feel free to add updates as replies anytime.
+
+        Keep it friendly and human: a couple links are fine, but let *you* be the main event (no link-dumping, recruiting, or promo-only posts).
+
+  - type: input
+    id: name
+    attributes:
+      label: "What should we call you? (optional)"
+      description: "First name, handle, or whatever you prefer—no real name required."
+      placeholder: "e.g., Samus / @samus-aran / “Sam”"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: journey
+    attributes:
+      label: "Where are you in your GitHub journey?"
+      description: "Pick the closest match—there’s no wrong answer."
+      options:
+        - "Brand new to GitHub"
+        - "Student / learning the basics"
+        - "Building my first project"
+        - "Contributing to open source"
+        - "Maintaining a project / repo owner"
+        - "Here to make connections"
+        - "Other"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: interest_areas
+    attributes:
+      label: "Interest areas (optional)"
+      description: "Choose a few broad topics, then add your own tags below."
+      options:
+        - label: "Open source"
+        - label: "Accessibility"
+        - label: "Git basics"
+        - label: "GitHub features & news"
+        - label: "Actions / CI"
+        - label: "Docs"
+        - label: "Security"
+        - label: "Dev tools"
+        - label: "API / integrations"
+        - label: "Project management"
+        - label: "Community building"
+        - label: "Other"
+    validations:
+      required: false
+
+  - type: input
+    id: interest_tags
+    attributes:
+      label: "In 2–3 words, what are you interested in on GitHub? (optional)"
+      description: "Think of these like mini-tags (e.g., “design systems”, “Python”, “issue triage”, “docs”)."
+      placeholder: "e.g., accessibility testing; GitHub Actions; documentation"
+    validations:
+      required: false
+
+  - type: textarea
+    id: learn_build
+    attributes:
+      label: "What are you hoping to learn or build next?"
+      description: "A sentence or two is perfect—share what you’re excited about."
+      placeholder: "I’m hoping to… / I’m building… / Next I want to try…"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: fun_extra
+    attributes:
+      label: "A fun extra (optional)"
+      description: "Choose one prompt—or skip it!"
+      options:
+        - "Favorite tool right now"
+        - "Currently learning"
+        - "Fun fact"
+        - "Your ‘ask me about…’ topic"
+        - "Something you’re proud of"
+        - "Other"
+    validations:
+      required: false
+
+  - type: textarea
+    id: fun_answer
+    attributes:
+      label: "Your fun extra (optional)"
+      description: "Keep it light—anything that invites conversation."
+      placeholder: "Ask me about… / Fun fact: … / Currently learning: …"
+    validations:
+      required: false
+
+  - type: textarea
+    id: links
+    attributes:
+      label: "Optional links (optional)"
+      description: "If you want, share your GitHub profile and/or **one** relevant repo. Keep it secondary to your intro (no promo blasts)."
+      placeholder: |
+        https://github.com/your-handle
+        https://github.com/your-handle/your-repo
+    validations:
+      required: false
