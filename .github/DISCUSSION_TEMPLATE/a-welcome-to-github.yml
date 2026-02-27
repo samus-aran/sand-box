@@ -6,17 +6,11 @@ body:
       value: |
         <img src="https://github.com/user-attachments/assets/e783c2de-cd6b-4576-9663-96bd0fb29391" />
 
-        Welcome This space is for introductions Say hi share what you are excited about and meet other folks
-
-        **Quick routing** Post how to use GitHub or troubleshooting in New to GitHub or the best help category
-
-        **Privacy** Do not share sensitive personal info
-
-        **One intro per person** One post per person Updates as replies
-
-        **Keep it friendly** A couple links are fine Keep them secondary No recruiting No link dumping
-
-        **Conversation starter** End with Ask me about or Say hi if you also like
+        Welcome! This space is **just** for introductions! So say hi and share what you’re excited about here on GitHub.
+        - **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
+        - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
+        - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
+        Keep it friendly and human: a couple links are fine, but let *you* be the main event (no link-dumping, recruiting, or promo-only posts).
   - type: input
     id: name
     attributes:
