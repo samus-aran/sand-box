@@ -4,7 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-      Welcome! This space is **just** for introductions! So say hi and share what you’re excited about here on GitHub.
+        Welcome! This space is **just** for introductions! So say hi and share what you’re excited about here on GitHub.
         - **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
         - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
         - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
