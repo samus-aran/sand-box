@@ -72,7 +72,7 @@ body:
       placeholder: "My next step is… I want to try… I am looking for…"
     validations:
       required: false
-   - type: markdown
+  - type: markdown
     attributes:
       value: |
         <img src="https://github.com/user-attachments/assets/4f34df69-2b34-4472-957a-0f9a1733bd31" width="30" alt="Welcome gif" />
