@@ -10,15 +10,8 @@ body:
         - **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
         - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
         - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
+        
         Keep it friendly and human: a couple links are fine, but let *you* be the main event (no link-dumping, recruiting, or promo-only posts).
-  - type: input
-    id: name
-    attributes:
-      label: "What should we call you? (optional)"
-      description: "First name, handle, or whatever you prefer. No real name required."
-      placeholder: "e.g., Samus, @samus-aran, Sam"
-    validations:
-      required: false
   - type: dropdown
     id: journey
     attributes:
@@ -26,40 +19,23 @@ body:
       description: "Pick the closest match. There is no wrong answer."
       options:
         - "Brand new to GitHub"
-        - "Student or learning the basics"
+        - "Learning the basics"
         - "Building my first project"
+        - "Looking for the latest developer trends"
         - "Contributing to open source"
         - "Maintaining a project or repo owner"
         - "Here to make connections"
+        - "Student / Leveling up"
+        - "Just exploring"
         - "Other"
     validations:
       required: true
-  - type: checkboxes
-    id: interest_areas
-    attributes:
-      label: "Interest areas (optional)"
-      description: "Choose a few broad topics, then add your own tags below."
-      options:
-        - label: "Open source"
-        - label: "Accessibility"
-        - label: "Git basics"
-        - label: "GitHub features and news"
-        - label: "Actions or CI"
-        - label: "Docs"
-        - label: "Security"
-        - label: "Dev tools"
-        - label: "API or integrations"
-        - label: "Project management"
-        - label: "Community building"
-        - label: "Other"
-    validations:
-      required: false
   - type: input
     id: interest_tags
     attributes:
       label: "In 2 to 3 words, what are you interested in on GitHub? (optional)"
-      description: "Think of these like mini tags. Examples include design systems, Python, issue triage, docs."
-      placeholder: "e.g., accessibility testing; GitHub Actions; documentation"
+      description: "Think of these like mini tags. Examples include game development, Python, bounty hunting, docs."
+      placeholder: "e.g., Rust and WASM; React components; CI pipelines"
     validations:
       required: false
   - type: textarea
@@ -70,35 +46,30 @@ body:
       placeholder: "I am hoping to… I am building… Next I want to try…"
     validations:
       required: true
-  - type: dropdown
-    id: fun_extra
-    attributes:
-      label: "A fun extra (optional)"
-      description: "Choose one prompt or skip it."
-      options:
-        - "Favorite tool right now"
-        - "Currently learning"
-        - "Fun fact"
-        - "Your ask me about topic"
-        - "Something you are proud of"
-        - "Other"
-    validations:
-      required: false
   - type: textarea
-    id: fun_answer
+    id: learn_build
     attributes:
-      label: "Your fun extra (optional)"
-      description: "Keep it light and inviting."
-      placeholder: "Ask me about… Fun fact… Currently learning…"
+      label: "What are you hoping to learn or build next?"
+      description: "A sentence or two is perfect."
+      placeholder: "I am hoping to… I am building… Next I want to try…"
+    validations:
+      required: true
+  - type: textarea
+    id: fun_prompt
+    attributes:
+      label: "One small thing you will not find on your README (optional)"
+      description: "Make it personal and easy to reply to. It can be tiny."
+      placeholder: "Right now I am excited about… Ask me about… My favorite debugging trick is… The last thing I shipped was…"
     validations:
       required: false
   - type: textarea
     id: links
     attributes:
       label: "Optional links (optional)"
-      description: "If you want, share your GitHub profile and or one relevant repo. Keep it secondary to your intro."
+      description: "If you want, share a personal website, blog, or social handle."
       placeholder: |
-        https://github.com/your-handle
-        https://github.com/your-handle/your-repo
+        https://your-site.example
+        https://your-blog.example
+        @your-handle
     validations:
       required: false
