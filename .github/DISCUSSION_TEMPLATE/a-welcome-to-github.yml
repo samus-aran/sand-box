@@ -9,7 +9,7 @@ body:
         - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
         - **One intro per person:** make one intro post and feel free to add updates as replies anytime.
         
-        Keep it friendly and human: a couple links are fine, but let *you* be the main event (no link-dumping, recruiting, or promo-only posts).
+        Keep it friendly and human: a couple links are fine, but no link-dumping, recruiting, or promo-only posts. 
         <img src='https://github.com/user-attachments/assets/4f34df69-2b34-4472-957a-0f9a1733bd31' width='30' alt='Welcome gif' /> 
   - type: textarea
     id: introduce_yourself
