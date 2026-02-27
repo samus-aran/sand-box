@@ -5,6 +5,7 @@ body:
     attributes:
       value: |
         <img src="https://github.com/user-attachments/assets/e783c2de-cd6b-4576-9663-96bd0fb29391" />
+        
         Welcome! This space is **just** for introductions! So say hi and share what you’re excited about here on GitHub.
         - **Quick nudge:** if your post is really “how do I use GitHub?” or troubleshooting something, please use **New to GitHub** (or the most relevant help category) so you can get the best answers.
         - **Privacy & safety:** please don’t share sensitive personal info (addresses, phone numbers, private emails, etc.).
@@ -14,7 +15,7 @@ body:
   - type: textarea
     id: introduce_yourself
     attributes:
-      label: "Introduce yourself"
+      label: "Introduce yourself  <img src='https://github.com/user-attachments/assets/4f34df69-2b34-4472-957a-0f9a1733bd31' width='30' alt='Welcome gif' />"
       description: "A few sentences is great. Help us say hi back."
       placeholder: "Hi everyone I am… I am here because… Ask me about…"
     validations:
@@ -72,7 +73,3 @@ body:
       placeholder: "My next step is… I want to try… I am looking for…"
     validations:
       required: false
-  - type: markdown
-    attributes:
-      value: |
-        <img src="https://github.com/user-attachments/assets/4f34df69-2b34-4472-957a-0f9a1733bd31" width="30" alt="Welcome gif" />
