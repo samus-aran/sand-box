@@ -71,7 +71,7 @@ body:
       description: "Your next step can be small. This helps others cheer you on or share ideas."
       placeholder: "My next step is… I want to try… I am looking for…"
     validations:
-      required: false
+      required: true
   - type: markdown
     attributes:
       value: |
