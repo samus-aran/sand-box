@@ -47,14 +47,6 @@ body:
     validations:
       required: true
   - type: textarea
-    id: learn_build
-    attributes:
-      label: "What are you hoping to learn or build next?"
-      description: "A sentence or two is perfect."
-      placeholder: "I am hoping to… I am building… Next I want to try…"
-    validations:
-      required: true
-  - type: textarea
     id: fun_prompt
     attributes:
       label: "One small thing you will not find on your README (optional)"
